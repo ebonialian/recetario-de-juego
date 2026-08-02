@@ -1,0 +1,16 @@
+{
+  "name": "Recetario de juego",
+  "short_name": "Recetario",
+  "description": "Ideas de juego sin pantalla para compartir con tu peque, según su edad y el momento del día.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fdf6ea",
+  "theme_color": "#ffe9d6",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
