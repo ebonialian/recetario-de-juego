@@ -12,7 +12,7 @@ import type {
 } from './types'
 
 export const MOTOR_OPTIONS: { value: MotorStage; label: string }[] = [
-  { value: 'sentada', label: 'Se sostiene sentada' },
+  { value: 'sentada', label: 'Se sostiene' },
   { value: 'gatea', label: 'Gatea' },
   { value: 'apoyo', label: 'Camina con apoyo' },
   { value: 'camina', label: 'Camina sola' },
@@ -44,9 +44,9 @@ export const PLACE_OPTIONS: { value: Place; label: string }[] = [
 ]
 
 export const STATE_OPTIONS: { value: ChildState; label: string }[] = [
-  { value: 'despierta', label: 'Recién despierta' },
+  { value: 'despierta', label: 'Recién se despertó' },
   { value: 'pilas', label: 'Con pilas' },
-  { value: 'cansada', label: 'Cansada' },
+  { value: 'cansada', label: 'Con sueño' },
 ]
 
 export const MATERIALS_OPTIONS: { value: Materials; label: string }[] = [
@@ -65,8 +65,8 @@ export const TYPE_OPTIONS: { value: ActType; label: string }[] = [
 
 export const OBJECTIVE_OPTIONS: { value: Objective; label: string }[] = [
   { value: 'compartir', label: 'Compartir un rato' },
-  { value: 'cansarla', label: 'Cansarla antes de dormir' },
-  { value: 'calmarla', label: 'Calmarla' },
+  { value: 'cansarla', label: 'Bajar el ritmo antes de dormir' },
+  { value: 'calmarla', label: 'Ayudar a calmarse' },
   { value: 'lenguaje', label: 'Estimular lenguaje' },
 ]
 

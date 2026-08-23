@@ -1,11 +1,11 @@
 {
-  "name": "Recetario de juego",
-  "short_name": "Recetario",
-  "description": "Ideas de juego sin pantalla para compartir con tu peque, según su edad y el momento del día.",
+  "name": "compinches.",
+  "short_name": "Compinches",
+  "description": "Ideas de juego sin pantalla para compartir con tu hijo/a, según su edad y el momento del día.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#fdf6ea",
-  "theme_color": "#ffe9d6",
+  "background_color": "#FFE9D6",
+  "theme_color": "#FFE9D6",
   "icons": [
     {
       "src": "/icon.svg",

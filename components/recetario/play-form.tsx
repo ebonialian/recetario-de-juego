@@ -145,7 +145,7 @@ export function PlayForm({ loading, onGenerate }: PlayFormProps) {
         </div>
       </Field>
 
-      <Field label="¿Cómo está ella?">
+      <Field label="¿Cómo anda?">
         <div className="flex flex-wrap gap-2">
           {STATE_OPTIONS.map((o) => (
             <Chip

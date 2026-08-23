@@ -5,8 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-fredoka), var(--font-nunito), sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-baloo), sans-serif;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -53,50 +53,36 @@
   color-scheme: light;
   --radius: 1.5rem;
 
-  /* Fondo crema manteca cálido, sin ser rosa bebé genérico */
-  --background: oklch(0.98 0.02 85);
-  --foreground: oklch(0.36 0.05 300);
-
-  --card: oklch(0.995 0.006 90);
-  --card-foreground: oklch(0.36 0.05 300);
-
-  --popover: oklch(0.995 0.006 90);
-  --popover-foreground: oklch(0.36 0.05 300);
-
-  /* Durazno suave como color de marca */
-  --primary: oklch(0.82 0.09 45);
-  --primary-foreground: oklch(0.33 0.06 40);
-
-  /* Lavanda */
-  --secondary: oklch(0.9 0.05 300);
-  --secondary-foreground: oklch(0.38 0.07 300);
-
-  --muted: oklch(0.95 0.02 90);
-  --muted-foreground: oklch(0.55 0.04 300);
-
-  /* Celeste bebé */
-  --accent: oklch(0.9 0.06 235);
-  --accent-foreground: oklch(0.36 0.07 250);
-
-  --destructive: oklch(0.7 0.15 25);
-
-  --border: oklch(0.9 0.03 70);
-  --input: oklch(0.93 0.02 80);
-  --ring: oklch(0.82 0.09 45);
-
-  /* Habilidades */
-  --skill-motriz: oklch(0.88 0.08 45);
-  --skill-motriz-foreground: oklch(0.4 0.09 40);
-  --skill-sensorial: oklch(0.89 0.06 300);
-  --skill-sensorial-foreground: oklch(0.42 0.09 300);
-  --skill-lenguaje: oklch(0.88 0.07 235);
-  --skill-lenguaje-foreground: oklch(0.42 0.09 250);
-  --skill-cognitivo: oklch(0.92 0.09 95);
-  --skill-cognitivo-foreground: oklch(0.45 0.09 85);
-  --skill-emocional: oklch(0.89 0.07 10);
-  --skill-emocional-foreground: oklch(0.45 0.1 15);
-  --skill-social: oklch(0.89 0.07 160);
-  --skill-social-foreground: oklch(0.42 0.09 160);
+  --background: #FFE9D6;
+  --foreground: #3A322C;
+  --card: #FFE9D6;
+  --card-foreground: #3A322C;
+  --popover: #FFE9D6;
+  --popover-foreground: #3A322C;
+  --primary: #C97B63;
+  --primary-foreground: #FFE9D6;
+  --secondary: #FFE9D6;
+  --secondary-foreground: #3A322C;
+  --muted: #FFE9D6;
+  --muted-foreground: #3A322C;
+  --accent: #7C9473;
+  --accent-foreground: #FFE9D6;
+  --destructive: #C97B63;
+  --border: #C97B63;
+  --input: #C97B63;
+  --ring: #C97B63;
+  --skill-motriz: #7C9473;
+  --skill-motriz-foreground: #FFE9D6;
+  --skill-sensorial: #FFE9D6;
+  --skill-sensorial-foreground: #3A322C;
+  --skill-lenguaje: #7C9473;
+  --skill-lenguaje-foreground: #FFE9D6;
+  --skill-cognitivo: #FFE9D6;
+  --skill-cognitivo-foreground: #3A322C;
+  --skill-emocional: #7C9473;
+  --skill-emocional-foreground: #FFE9D6;
+  --skill-social: #FFE9D6;
+  --skill-social-foreground: #3A322C;
 }
 
 @layer base {

@@ -1,7 +1,6 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { Sparkles } from 'lucide-react'
 import { PlayForm } from '@/components/recetario/play-form'
 import { Results } from '@/components/recetario/results'
 import { generateActivities } from '@/lib/recetario/generate'
@@ -43,15 +42,11 @@ export default function Page() {
   return (
     <main className="mx-auto min-h-screen w-full max-w-md px-4 pb-10">
       <header className="flex flex-col items-center gap-2 pt-8 pb-6 text-center">
-        <span className="animate-float-soft inline-flex size-16 items-center justify-center rounded-3xl bg-primary text-primary-foreground shadow-sm">
-          <Sparkles className="size-8" strokeWidth={2.5} aria-hidden="true" />
-        </span>
-        <h1 className="font-heading text-3xl font-bold text-balance text-foreground">
-          Recetario de juego
+        <h1 className="font-heading text-4xl font-extrabold tracking-tight text-balance">
+          <span className="text-primary">compinches</span><span className="text-accent">.</span>
         </h1>
         <p className="text-pretty text-sm leading-relaxed text-muted-foreground">
-          Ideas de juego sin pantalla para compartir con tu peque, según su edad y el momento del
-          día.
+          Tu compinche para inventar la tarde: ideas sin pantalla, hechas a tu manera.
         </p>
       </header>
 
