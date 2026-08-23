@@ -29,8 +29,8 @@ export function Chip({ label, selected, onToggle }: ChipProps) {
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
         popping && 'animate-chip-pop',
         selected
-          ? 'border-primary bg-primary text-primary-foreground shadow-sm'
-          : 'border-border bg-card text-foreground/80 hover:border-primary/50 hover:bg-muted',
+          ? 'border-terracota bg-terracota text-peach shadow-sm'
+          : 'border-terracota/40 bg-peach text-textdark hover:border-terracota hover:bg-peach',
       )}
     >
       {selected && <Check className="size-4" aria-hidden="true" strokeWidth={3} />}

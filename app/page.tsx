@@ -40,7 +40,7 @@ export default function Page() {
   }
 
   return (
-    <main className="mx-auto min-h-screen w-full max-w-md px-4 pb-10">
+    <main className="mx-auto min-h-screen w-full max-w-md bg-peach px-4 pb-10">
       <header className="flex flex-col items-center gap-2 pt-8 pb-6 text-center">
         <h1 className="font-heading text-4xl font-extrabold tracking-tight text-balance">
           <span className="text-primary">compinches</span><span className="text-accent">.</span>
