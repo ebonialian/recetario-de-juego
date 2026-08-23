@@ -223,7 +223,7 @@ export function PlayForm({ loading, onGenerate }: PlayFormProps) {
       <button
         type="submit"
         disabled={loading}
-        className="sticky bottom-4 z-10 mt-1 inline-flex min-h-14 items-center justify-center gap-2 rounded-full bg-primary px-6 text-lg font-bold text-primary-foreground shadow-lg transition-transform active:scale-[0.98] disabled:opacity-60"
+        className="mt-1 inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 text-lg font-bold text-primary-foreground shadow-lg transition-transform active:scale-[0.98] disabled:opacity-60"
       >
         <Search className="size-5" strokeWidth={2.5} aria-hidden="true" />
         {loading ? 'Pensando ideas…' : 'Buscar ideas'}
