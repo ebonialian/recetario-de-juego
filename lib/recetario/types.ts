@@ -38,6 +38,7 @@ export interface Activity {
   steps: string[]
   skills: SkillKey[]
   decoration: Decoration
+  seen?: boolean
   // metadatos de matcheo
   minMotor: number
   interests: Interest[]

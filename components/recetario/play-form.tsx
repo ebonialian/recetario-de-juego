@@ -32,11 +32,12 @@ interface FieldProps {
   label: string
   hint?: string
   children: React.ReactNode
+  className?: string
 }
 
-function Field({ label, hint, children }: FieldProps) {
+function Field({ label, hint, children, className }: FieldProps) {
   return (
-    <section className="rounded-3xl border-2 border-border bg-card p-4">
+    <section className={`rounded-xl border-2 border-border bg-card p-4 ${className ?? ''}`}>
       <div className="mb-3">
         <h2 className="font-heading text-base font-bold text-foreground">{label}</h2>
         {hint && <p className="text-xs font-medium text-muted-foreground">{hint}</p>}
@@ -49,9 +50,10 @@ function Field({ label, hint, children }: FieldProps) {
 interface PlayFormProps {
   loading: boolean
   onGenerate: (input: PlayInput) => void
+  variant?: 'compact' | 'expanded'
 }
 
-export function PlayForm({ loading, onGenerate }: PlayFormProps) {
+export function PlayForm({ loading, onGenerate, variant = 'compact' }: PlayFormProps) {
   const [ageMonths, setAgeMonths] = useState(13)
   const [motor, setMotor] = useState<MotorStage>('apoyo')
   const [interests, setInterests] = useState<Interest[]>(['musica'])
@@ -63,6 +65,12 @@ export function PlayForm({ loading, onGenerate }: PlayFormProps) {
   const [objective, setObjective] = useState<Objective>('compartir')
   const [who, setWho] = useState<Who>('solo')
   const [notes, setNotes] = useState('')
+
+  const isExpanded = variant === 'expanded'
+  const formLayout = isExpanded
+    ? 'grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-5'
+    : 'flex flex-col gap-4'
+  const fullSpan = isExpanded ? 'lg:col-span-3' : ''
 
   function toggleInterest(value: Interest) {
     setInterests((prev) =>
@@ -88,7 +96,7 @@ export function PlayForm({ loading, onGenerate }: PlayFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+    <form onSubmit={handleSubmit} className={formLayout}>
       <Field label="¿Qué edad tiene?" hint="Sumá o restá meses">
         <AgeStepper months={ageMonths} onChange={setAgeMonths} />
       </Field>
@@ -210,20 +218,20 @@ export function PlayForm({ loading, onGenerate }: PlayFormProps) {
         </div>
       </Field>
 
-      <Field label="Ya probaron / no enganchó" hint="Opcional, para afinar la idea">
+      <Field label="Ya probaron / no enganchó" hint="Opcional, para afinar la idea" className={fullSpan}>
         <textarea
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           rows={3}
           placeholder="Ej: ya jugamos con la pelota, no le gustó la pintura…"
-          className="w-full resize-none rounded-2xl border-2 border-input bg-background p-3 text-base leading-relaxed text-foreground placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:outline-none"
+          className="w-full resize-none rounded-lg border-2 border-input bg-background p-3 text-base leading-relaxed text-foreground placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:outline-none"
         />
       </Field>
 
       <button
         type="submit"
         disabled={loading}
-        className="mt-1 inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 text-lg font-bold text-primary-foreground shadow-lg transition-transform active:scale-[0.98] disabled:opacity-60"
+        className={`mt-1 inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 text-lg font-bold text-primary-foreground shadow-lg transition-transform active:scale-[0.98] disabled:opacity-60 ${fullSpan}`}
       >
         <Search className="size-5" strokeWidth={2.5} aria-hidden="true" />
         {loading ? 'Pensando ideas…' : 'Buscar ideas'}
