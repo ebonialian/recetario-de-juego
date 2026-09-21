@@ -60,13 +60,12 @@ export const TYPE_OPTIONS: { value: ActType; label: string }[] = [
   { value: 'sensorial', label: 'Sensorial' },
   { value: 'lenguaje', label: 'Lenguaje' },
   { value: 'arte', label: 'Arte / desastre' },
-  { value: 'tranquila', label: 'Tranquila' },
 ]
 
 export const OBJECTIVE_OPTIONS: { value: Objective; label: string }[] = [
   { value: 'compartir', label: 'Compartir un rato' },
-  { value: 'cansarla', label: 'Bajar el ritmo antes de dormir' },
-  { value: 'calmarla', label: 'Ayudar a calmarse' },
+  { value: 'cansarla', label: 'Cansarla / quemar energía' },
+  { value: 'calmarla', label: 'Bajar el ritmo antes de dormir' },
   { value: 'lenguaje', label: 'Estimular lenguaje' },
 ]
 

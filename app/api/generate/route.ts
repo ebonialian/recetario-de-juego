@@ -76,30 +76,44 @@ export async function POST(req: NextRequest) {
     if (fetchError) throw fetchError
 
     const motorIdx = motorIndex(input.motor)
-    const hardFiltered = (candidates ?? []).filter(
-      (row) =>
-        row.min_motor <= motorIdx &&
-        MATERIAL_RANK[row.materials_level as Materials] <= MATERIAL_RANK[input.materials],
-    )
 
-    const notInThisSession = hardFiltered.filter((row) => !excludeTitles.includes(row.title))
-    const unseen = notInThisSession.filter((row) => !seenTitles.includes(row.title))
-    const alreadySeen = notInThisSession.filter((row) => seenTitles.includes(row.title))
+    // Etapa motriz: filtro duro, nunca se relaja.
+    const motorOk = (candidates ?? []).filter((row) => row.min_motor <= motorIdx)
+    const notInThisSession = motorOk.filter((row) => !excludeTitles.includes(row.title))
 
-    const ranked = unseen
-      .map((row) => ({ row, s: scoreRow(row, input) }))
-      .sort((a, b) => b.s - a.s)
-      .map((x) => x.row)
+    // Objetivo (cansarla, calmarla, compartir, lenguaje): filtro duro, NUNCA se
+    // relaja. Antes solo sumaba puntaje y una actividad de energía alta le
+    // podía ganar a una de energía baja si matcheaba mejor en otros ejes.
+    // Modo estricto: si no hay 3 que respeten el objetivo ni relajando
+    // materiales, se llama a la API en vez de mostrar algo que no corresponde.
+    const objectiveOk = notInThisSession.filter((row) => row.objectives.includes(input.objective))
 
-    let selectedRows = ranked.slice(0, 3)
-
-    if (selectedRows.length < 3) {
-      const rankedSeen = alreadySeen
-        .map((row) => ({ row, s: scoreRow(row, input) }))
-        .sort((a, b) => b.s - a.s)
-        .map((x) => x.row)
-      selectedRows = [...selectedRows, ...rankedSeen.slice(0, 3 - selectedRows.length)]
+    const pickFrom = (pool: any[]) => {
+      const unseenPool = pool.filter((row) => !seenTitles.includes(row.title))
+      const seenPool = pool.filter((row) => seenTitles.includes(row.title))
+      const rank = (rows: any[]) =>
+        rows
+          .map((row) => ({ row, s: scoreRow(row, input) }))
+          .sort((a, b) => b.s - a.s)
+          .map((x) => x.row)
+      return [...rank(unseenPool), ...rank(seenPool)]
     }
+
+    // 1) Objetivo + materiales estrictos.
+    const strictMaterials = objectiveOk.filter(
+      (row) => MATERIAL_RANK[row.materials_level as Materials] <= MATERIAL_RANK[input.materials],
+    )
+    let orderedRows = pickFrom(strictMaterials)
+
+    // 2) Objetivo se mantiene, materiales se relajan.
+    if (orderedRows.length < 3) {
+      orderedRows = pickFrom(objectiveOk)
+    }
+
+    // Si ni así llegan a 3, quedan los que haya (menos de 3) y el resto lo
+    // completa la API más abajo — nunca se rellena con algo que no respete
+    // el objetivo.
+    let selectedRows = orderedRows.slice(0, 3)
 
     let activities: Activity[] = selectedRows.map((row) => ({
       ...dbRowToActivity(row),
