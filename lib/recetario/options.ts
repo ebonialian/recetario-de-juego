@@ -15,7 +15,7 @@ export const MOTOR_OPTIONS: { value: MotorStage; label: string }[] = [
   { value: 'sentada', label: 'Se sostiene' },
   { value: 'gatea', label: 'Gatea' },
   { value: 'apoyo', label: 'Camina con apoyo' },
-  { value: 'camina', label: 'Camina sola' },
+  { value: 'camina', label: 'Camina sin apoyo' },
   { value: 'corre', label: 'Corre' },
 ]
 
@@ -64,55 +64,22 @@ export const TYPE_OPTIONS: { value: ActType; label: string }[] = [
 
 export const OBJECTIVE_OPTIONS: { value: Objective; label: string }[] = [
   { value: 'compartir', label: 'Compartir un rato' },
-  { value: 'cansarla', label: 'Cansarla / quemar energía' },
+  { value: 'cansarla', label: 'Quemar energía' },
   { value: 'calmarla', label: 'Bajar el ritmo antes de dormir' },
   { value: 'lenguaje', label: 'Estimular lenguaje' },
 ]
 
 export const WHO_OPTIONS: { value: Who; label: string }[] = [
   { value: 'solo', label: 'Solo yo' },
-  { value: 'mama', label: 'Los dos con mamá' },
+  { value: 'mama', label: 'Con otro adulto' },
   { value: 'hermanos', label: 'Con hermanos / primos' },
 ]
 
-export const SKILL_META: Record<
-  SkillKey,
-  { label: string; icon: string; bg: string; fg: string }
-> = {
-  motriz: {
-    label: 'Motriz fino',
-    icon: 'Hand',
-    bg: 'bg-skill-motriz',
-    fg: 'text-skill-motriz-foreground',
-  },
-  sensorial: {
-    label: 'Sensorial',
-    icon: 'Sparkles',
-    bg: 'bg-skill-sensorial',
-    fg: 'text-skill-sensorial-foreground',
-  },
-  lenguaje: {
-    label: 'Lenguaje',
-    icon: 'MessageCircle',
-    bg: 'bg-skill-lenguaje',
-    fg: 'text-skill-lenguaje-foreground',
-  },
-  cognitivo: {
-    label: 'Cognitivo',
-    icon: 'Lightbulb',
-    bg: 'bg-skill-cognitivo',
-    fg: 'text-skill-cognitivo-foreground',
-  },
-  emocional: {
-    label: 'Emocional',
-    icon: 'Heart',
-    bg: 'bg-skill-emocional',
-    fg: 'text-skill-emocional-foreground',
-  },
-  social: {
-    label: 'Social',
-    icon: 'Users',
-    bg: 'bg-skill-social',
-    fg: 'text-skill-social-foreground',
-  },
+export const SKILL_META: Record<SkillKey, { label: string; icon: string }> = {
+  motriz: { label: 'Motriz fino', icon: 'Hand' },
+  sensorial: { label: 'Sensorial', icon: 'Sparkles' },
+  lenguaje: { label: 'Lenguaje', icon: 'MessageCircle' },
+  cognitivo: { label: 'Cognitivo', icon: 'Lightbulb' },
+  emocional: { label: 'Emocional', icon: 'Heart' },
+  social: { label: 'Social', icon: 'Users' },
 }

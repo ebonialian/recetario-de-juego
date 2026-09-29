@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState, type FormEvent } from 'react'
+import { CircleAlert, MailCheck } from 'lucide-react'
 import { supabase } from '@/lib/supabaseClient'
 import type { User } from '@supabase/supabase-js'
 
@@ -9,6 +10,7 @@ export function AuthStatus() {
   const [email, setEmail] = useState('')
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -25,6 +27,7 @@ export function AuthStatus() {
   async function handleLogin(e: FormEvent) {
     e.preventDefault()
     setLoading(true)
+    setError(false)
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: { emailRedirectTo: window.location.origin },
@@ -32,7 +35,7 @@ export function AuthStatus() {
     setLoading(false)
     if (error) {
       console.error(error)
-      alert('Hubo un error enviando el link. Probá de nuevo.')
+      setError(true)
       return
     }
     setSent(true)
@@ -44,9 +47,13 @@ export function AuthStatus() {
 
   if (user) {
     return (
-      <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
+      <div className="micro flex items-center justify-center gap-2 text-noche-suave">
         <span>{user.email}</span>
-        <button onClick={handleLogout} className="underline">
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="min-h-11 px-1 text-noche underline underline-offset-4"
+        >
           Cerrar sesión
         </button>
       </div>
@@ -55,29 +62,43 @@ export function AuthStatus() {
 
   if (sent) {
     return (
-      <p className="text-center text-xs text-muted-foreground">
-        Te mandamos un link a {email}, revisá tu mail.
+      <p role="status" className="micro inline-flex items-center gap-1.5 text-noche">
+        <MailCheck className="size-[18px] shrink-0 text-exito" strokeWidth={2} aria-hidden="true" />
+        Te mandamos un link a {email}. Abrilo desde tu mail para entrar.
       </p>
     )
   }
 
   return (
-    <form onSubmit={handleLogin} className="flex items-center justify-center gap-2">
-      <input
-        type="email"
-        required
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="tu@email.com"
-        className="rounded-full border px-3 py-1 text-xs"
-      />
-      <button
-        type="submit"
-        disabled={loading}
-        className="rounded-full bg-terracota px-3 py-1 text-xs text-peach"
-      >
-        {loading ? '...' : 'Ingresar'}
-      </button>
+    <form onSubmit={handleLogin} className="flex w-full max-w-sm flex-col gap-1 text-left">
+      <label htmlFor="email-login" className="etiqueta text-noche">
+        Entrá con tu mail para guardar tu historial
+      </label>
+      <div className="flex gap-2">
+        <input
+          id="email-login"
+          type="email"
+          required
+          autoComplete="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="tu@email.com"
+          className="cuerpo h-11 min-w-0 flex-1 rounded-control border-[1.5px] border-noche-suave bg-superficie px-3 text-noche placeholder:text-noche-suave"
+        />
+        <button
+          type="submit"
+          disabled={loading}
+          className="opcion h-11 shrink-0 rounded-control border-2 border-noche px-4 text-noche transition-colors hover:bg-arena disabled:opacity-50"
+        >
+          {loading ? 'Enviando…' : 'Recibir link'}
+        </button>
+      </div>
+      {error && (
+        <p role="alert" className="micro mt-1 inline-flex items-center gap-1.5 text-error">
+          <CircleAlert className="size-4 shrink-0" strokeWidth={2} aria-hidden="true" />
+          No pudimos mandar el link. Revisá el mail y probá de nuevo.
+        </p>
+      )}
     </form>
   )
 }

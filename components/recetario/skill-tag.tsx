@@ -17,8 +17,8 @@ export function SkillTag({ skill }: { skill: SkillKey }) {
   const Icon = ICONS[meta.icon] ?? Sparkles
 
   return (
-    <span className="inline-flex items-center gap-1.5 text-xs font-bold text-salvia">
-      <Icon className="size-3.5" strokeWidth={2.5} aria-hidden="true" />
+    <span className="cuerpo inline-flex items-center gap-1.5 text-noche">
+      <Icon className="size-[18px] text-noche-suave" strokeWidth={2} aria-hidden="true" />
       {meta.label}
     </span>
   )

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Search } from 'lucide-react'
+import { cn } from '@/lib/utils'
 import {
   INTEREST_OPTIONS,
   MATERIALS_OPTIONS,
@@ -37,10 +38,10 @@ interface FieldProps {
 
 function Field({ label, hint, children, className }: FieldProps) {
   return (
-    <section className={`rounded-xl border-2 border-border bg-card p-4 ${className ?? ''}`}>
+    <section className={cn('rounded-card bg-superficie p-5 sm:p-6', className)}>
       <div className="mb-3">
-        <h2 className="font-heading text-base font-bold text-foreground">{label}</h2>
-        {hint && <p className="text-xs font-medium text-muted-foreground">{hint}</p>}
+        <h2 className="pregunta text-noche">{label}</h2>
+        {hint && <p className="micro text-noche-suave">{hint}</p>}
       </div>
       {children}
     </section>
@@ -68,9 +69,9 @@ export function PlayForm({ loading, onGenerate, variant = 'compact' }: PlayFormP
 
   const isExpanded = variant === 'expanded'
   const formLayout = isExpanded
-    ? 'grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-5'
+    ? 'grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5'
     : 'flex flex-col gap-4'
-  const fullSpan = isExpanded ? 'lg:col-span-3' : ''
+  const fullSpan = isExpanded ? 'md:col-span-2' : ''
 
   function toggleInterest(value: Interest) {
     setInterests((prev) =>
@@ -153,7 +154,7 @@ export function PlayForm({ loading, onGenerate, variant = 'compact' }: PlayFormP
         </div>
       </Field>
 
-      <Field label="¿Cómo anda?">
+      <Field label="¿Cómo anda de energía?">
         <div className="flex flex-wrap gap-2">
           {STATE_OPTIONS.map((o) => (
             <Chip
@@ -219,23 +220,36 @@ export function PlayForm({ loading, onGenerate, variant = 'compact' }: PlayFormP
       </Field>
 
       <Field label="Ya probaron / no enganchó" hint="Opcional, para afinar la idea" className={fullSpan}>
+        <label htmlFor="notas" className="sr-only">
+          Qué ya probaron o qué no enganchó
+        </label>
         <textarea
+          id="notas"
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           rows={3}
-          placeholder="Ej: ya jugamos con la pelota, no le gustó la pintura…"
-          className="w-full resize-none rounded-lg border-2 border-input bg-background p-3 text-base leading-relaxed text-foreground placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:outline-none"
+          placeholder="Ej: ya jugamos con la pelota, la pintura no enganchó…"
+          className="cuerpo w-full resize-none rounded-control border-[1.5px] border-noche-suave bg-superficie p-3 text-noche placeholder:text-noche-suave focus-visible:outline-3 focus-visible:outline-offset-0 focus-visible:outline-noche"
         />
       </Field>
 
-      <button
-        type="submit"
-        disabled={loading}
-        className={`mt-1 inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 text-lg font-bold text-primary-foreground shadow-lg transition-transform active:scale-[0.98] disabled:opacity-60 ${fullSpan}`}
+      {/* CTA fijo abajo mientras el formulario está en pantalla */}
+      <div
+        className={cn(
+          'sticky bottom-0 z-10 bg-papel pt-3 pb-[max(12px,env(safe-area-inset-bottom))] shadow-barra',
+          fullSpan,
+        )}
       >
-        <Search className="size-5" strokeWidth={2.5} aria-hidden="true" />
-        {loading ? 'Pensando ideas…' : 'Buscar ideas'}
-      </button>
+        <button
+          type="submit"
+          disabled={loading}
+          aria-busy={loading}
+          className="inline-flex h-13 w-full items-center justify-center gap-2 rounded-control bg-mostaza px-6 text-base font-bold text-noche transition-colors hover:bg-mostaza-hover active:bg-mostaza-hover disabled:bg-arena disabled:text-noche-suave"
+        >
+          <Search className="size-5" strokeWidth={2} aria-hidden="true" />
+          {loading ? 'Buscando ideas…' : 'Buscar ideas'}
+        </button>
+      </div>
     </form>
   )
 }

@@ -1,16 +1,15 @@
 {
-  "name": "compinches.",
+  "name": "Compinches",
   "short_name": "Compinches",
   "description": "Ideas de juego sin pantalla para compartir con tu hijo/a, según su edad y el momento del día.",
+  "lang": "es-AR",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#FFE9D6",
-  "theme_color": "#FFE9D6",
+  "background_color": "#FBF6EC",
+  "theme_color": "#FBF6EC",
   "icons": [
-    {
-      "src": "/icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml"
-    }
+    { "src": "/brand/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/brand/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/brand/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }

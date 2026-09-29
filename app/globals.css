@@ -4,12 +4,39 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@theme inline {
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-baloo), sans-serif;
-  --font-display: 'Baloo 2', sans-serif;
-  --font-body: 'Inter', sans-serif;
+/* ─────────────────────────────────────────────
+   Compinches DS v2 — tokens nuevos
+   ───────────────────────────────────────────── */
+@theme {
+  --color-papel: #FBF6EC;
+  --color-arena: #F1E6D0;
+  --color-superficie: #FFFFFF;
+  --color-noche: #1F2A44;
+  --color-noche-suave: #5A6275;
+  --color-linea: #E3D9C4;
+  --color-mostaza: #F2B705;
+  --color-mostaza-hover: #D9A300;
+  --color-coral: #E4583E;
+  --color-exito: #2E7D4F;
+  --color-exito-tinte: #E3F1E8;
+  --color-error: #B3261E;
+  --color-error-tinte: #F9E1DE;
 
+  --radius-control: 8px;
+  --radius-card: 16px;
+  --radius-tag: 999px;
+
+  --shadow-barra: 0 -4px 16px rgba(31, 42, 68, 0.08);
+}
+
+@theme inline {
+  /* Fuentes (las variables las crea next/font en layout.tsx) */
+  --font-sans: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
+
+  /* Tokens de shadcn, ahora apuntando a la paleta nueva (ver :root) */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -28,24 +55,6 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-peach: #FFE9D6;
-  --color-terracota: #C97B63;
-  --color-salvia: #7C9473;
-  --color-textdark: #3A322C;
-
-  /* Colores de habilidades ("qué fortalece") */
-  --color-skill-motriz: var(--skill-motriz);
-  --color-skill-motriz-foreground: var(--skill-motriz-foreground);
-  --color-skill-sensorial: var(--skill-sensorial);
-  --color-skill-sensorial-foreground: var(--skill-sensorial-foreground);
-  --color-skill-lenguaje: var(--skill-lenguaje);
-  --color-skill-lenguaje-foreground: var(--skill-lenguaje-foreground);
-  --color-skill-cognitivo: var(--skill-cognitivo);
-  --color-skill-cognitivo-foreground: var(--skill-cognitivo-foreground);
-  --color-skill-emocional: var(--skill-emocional);
-  --color-skill-emocional-foreground: var(--skill-emocional-foreground);
-  --color-skill-social: var(--skill-social);
-  --color-skill-social-foreground: var(--skill-social-foreground);
 
   --radius-sm: calc(var(--radius) - 6px);
   --radius-md: calc(var(--radius) - 3px);
@@ -57,58 +66,60 @@
 
 :root {
   color-scheme: light;
-  --radius: 0.5rem;
-  --color-peach: #FFE9D6;
-  --color-terracota: #C97B63;
-  --color-salvia: #7C9473;
-  --color-text: #3A322C;
-  --font-display: 'Baloo 2', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --radius: 0.5rem; /* = radius-control */
 
-  --background: var(--color-peach);
-  --foreground: #3A322C;
-  --card: #FFE9D6;
-  --card-foreground: #3A322C;
-  --popover: #FFE9D6;
-  --popover-foreground: #3A322C;
-  --primary: #C97B63;
-  --primary-foreground: #FFE9D6;
-  --secondary: #FFE9D6;
-  --secondary-foreground: #3A322C;
-  --muted: #FFE9D6;
-  --muted-foreground: #3A322C;
-  --accent: #7C9473;
-  --accent-foreground: #FFE9D6;
-  --destructive: #C97B63;
-  --border: #C97B63;
-  --input: #C97B63;
-  --ring: #C97B63;
-  --skill-motriz: #7C9473;
-  --skill-motriz-foreground: #FFE9D6;
-  --skill-sensorial: #FFE9D6;
-  --skill-sensorial-foreground: #3A322C;
-  --skill-lenguaje: #7C9473;
-  --skill-lenguaje-foreground: #FFE9D6;
-  --skill-cognitivo: #FFE9D6;
-  --skill-cognitivo-foreground: #3A322C;
-  --skill-emocional: #7C9473;
-  --skill-emocional-foreground: #FFE9D6;
-  --skill-social: #FFE9D6;
-  --skill-social-foreground: #3A322C;
+  /* shadcn → DS v2 */
+  --background: #FBF6EC;          /* papel */
+  --foreground: #1F2A44;          /* noche */
+  --card: #FFFFFF;                /* superficie */
+  --card-foreground: #1F2A44;
+  --popover: #FFFFFF;
+  --popover-foreground: #1F2A44;
+  --primary: #F2B705;             /* mostaza: solo CTA principal */
+  --primary-foreground: #1F2A44;  /* texto noche sobre mostaza */
+  --secondary: #F1E6D0;           /* arena */
+  --secondary-foreground: #1F2A44;
+  --muted: #F1E6D0;
+  --muted-foreground: #5A6275;    /* noche-suave */
+  --accent: #F1E6D0;
+  --accent-foreground: #1F2A44;
+  --destructive: #B3261E;         /* error */
+  --border: #E3D9C4;              /* linea: solo decorativo */
+  --input: #5A6275;               /* borde de controles: noche-suave */
+  --ring: #1F2A44;                /* foco: noche */
 }
+
+/* ─────────────────────────────────────────────
+   Estilos tipográficos del DS
+   ───────────────────────────────────────────── */
+@utility titulo-xl       { font-family: var(--font-bricolage), system-ui, sans-serif; font-size: 40px; line-height: 44px; font-weight: 800; }
+@utility titulo-pantalla { font-family: var(--font-bricolage), system-ui, sans-serif; font-size: 30px; line-height: 34px; font-weight: 800; }
+@utility titulo-card     { font-family: var(--font-bricolage), system-ui, sans-serif; font-size: 22px; line-height: 28px; font-weight: 700; }
+@utility pregunta { font-family: var(--font-nunito), system-ui, sans-serif; font-size: 17px; line-height: 24px; font-weight: 700; }
+@utility cuerpo   { font-family: var(--font-nunito), system-ui, sans-serif; font-size: 15px; line-height: 22px; font-weight: 400; }
+@utility opcion   { font-family: var(--font-nunito), system-ui, sans-serif; font-size: 15px; line-height: 20px; font-weight: 600; }
+@utility etiqueta { font-family: var(--font-nunito), system-ui, sans-serif; font-size: 13px; line-height: 18px; font-weight: 700; }
+@utility micro    { font-family: var(--font-nunito), system-ui, sans-serif; font-size: 13px; line-height: 18px; font-weight: 400; }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+  html,
   body {
-    @apply bg-peach text-textdark;
+    @apply bg-papel;
+  }
+  body {
+    @apply text-noche;
+    font-size: 15px;
+    line-height: 22px;
+    -webkit-font-smoothing: antialiased;
   }
   h1,
   h2,
   h3,
   h4 {
-    font-family: var(--font-display);
+    font-family: var(--font-bricolage), system-ui, sans-serif;
   }
   body,
   p,
@@ -116,52 +127,50 @@
   input,
   textarea,
   label {
-    font-family: var(--font-body);
+    font-family: var(--font-nunito), system-ui, sans-serif;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-noche);
+    outline-offset: 2px;
+  }
+  ::selection {
+    background: var(--color-noche);
+    color: var(--color-papel);
   }
 }
 
-/* Micro-interacción: "pop" suave al seleccionar un chip */
+/* ─────────────────────────────────────────────
+   Animaciones (se mantienen, suaves)
+   ───────────────────────────────────────────── */
 @keyframes chip-pop {
-  0% {
-    transform: scale(1);
-  }
-  45% {
-    transform: scale(1.08);
-  }
-  100% {
-    transform: scale(1);
-  }
+  0% { transform: scale(1); }
+  45% { transform: scale(1.08); }
+  100% { transform: scale(1); }
 }
-
 .animate-chip-pop {
   animation: chip-pop 0.28s ease-out;
 }
 
 @keyframes float-soft {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-6px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
-
 .animate-float-soft {
   animation: float-soft 4s ease-in-out infinite;
 }
 
 @keyframes card-in {
-  0% {
-    opacity: 0;
-    transform: translateY(12px) scale(0.98);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  0% { opacity: 0; transform: translateY(12px) scale(0.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
 }
-
 .animate-card-in {
   animation: card-in 0.4s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-chip-pop,
+  .animate-float-soft,
+  .animate-card-in {
+    animation: none;
+  }
 }

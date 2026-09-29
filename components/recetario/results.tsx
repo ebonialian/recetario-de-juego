@@ -14,10 +14,8 @@ interface ResultsProps {
 export function Results({ loading, activities, onRegenerate }: ResultsProps) {
   if (loading) {
     return (
-      <div className="flex flex-col gap-4">
-        <p className="text-center text-sm font-medium text-textdark">
-          Buscando algo para este momento…
-        </p>
+      <div className="flex flex-col gap-4" aria-busy="true">
+        <p className="cuerpo text-noche-suave">Buscando algo para este momento…</p>
         <ActivitySkeleton />
         <ActivitySkeleton />
         <ActivitySkeleton />
@@ -29,9 +27,8 @@ export function Results({ loading, activities, onRegenerate }: ResultsProps) {
 
   return (
     <section aria-label="Ideas sugeridas" className="flex flex-col gap-4">
-      <p className="px-1 text-center font-body text-sm leading-relaxed text-textdark">
-        Acá tenés algo para compartir hoy.
-      </p>
+      <p className="cuerpo text-noche">Acá tenés algo para compartir hoy.</p>
+
       <div className="flex flex-col gap-4">
         {activities.map((a, i) => (
           <ActivityCard key={a.id} activity={a} index={i} />
@@ -41,10 +38,10 @@ export function Results({ loading, activities, onRegenerate }: ResultsProps) {
       <button
         type="button"
         onClick={onRegenerate}
-        className="inline-flex min-h-14 items-center justify-center gap-2 rounded-full bg-terracota px-6 text-lg font-bold text-peach shadow-sm transition-transform hover:bg-terracota/90 active:scale-[0.98]"
+        className="opcion inline-flex h-13 items-center justify-center gap-2 rounded-control border-2 border-noche bg-transparent px-6 text-noche transition-colors hover:bg-arena"
       >
-        <RefreshCw className="size-5" strokeWidth={2.5} aria-hidden="true" />
-        Otras 3 ideas
+        <RefreshCw className="size-5" strokeWidth={2} aria-hidden="true" />
+        Ver otras 3 ideas
       </button>
     </section>
   )

@@ -2,6 +2,17 @@ import Anthropic from '@anthropic-ai/sdk'
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabaseClient'
 import { MOTOR_ORDER, type PlayInput, type Activity, type MotorStage, type Materials } from '@/lib/recetario/types'
+import {
+  INTEREST_OPTIONS,
+  MATERIALS_OPTIONS,
+  MOTOR_OPTIONS,
+  OBJECTIVE_OPTIONS,
+  PLACE_OPTIONS,
+  STATE_OPTIONS,
+  TIME_OPTIONS,
+  TYPE_OPTIONS,
+  WHO_OPTIONS,
+} from '@/lib/recetario/options'
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
@@ -11,6 +22,12 @@ const MATERIAL_RANK: Record<Materials, number> = { casa: 0, compro: 1, salimos: 
 
 function motorIndex(motor: MotorStage): number {
   return MOTOR_ORDER.indexOf(motor)
+}
+
+// Traduce el valor interno (ej. 'mama', 'cansarla') al texto neutro que ve la persona,
+// para que la IA no reciba palabras con género ni "mamá".
+function labelOf<T extends string>(options: { value: T; label: string }[], value: T): string {
+  return options.find((o) => o.value === value)?.label ?? value
 }
 
 function dbRowToActivity(row: any): Activity {
@@ -194,7 +211,7 @@ export async function POST(req: NextRequest) {
         .insert(generatedRows)
       if (insertError) console.error('Error guardando generadas:', insertError)
 
-      const newActivities: Activity[] = generatedRows.map((row) => ({
+      const newActivities: Activity[] = generatedRows.map((row: any) => ({
         ...dbRowToActivity(row),
         seen: false,
       }))
@@ -216,24 +233,39 @@ export async function POST(req: NextRequest) {
 }
 
 function buildPrompt(input: PlayInput, excludeTitles: string[] = [], count = 3) {
-  return `
-Sos un experto en desarrollo infantil que sugiere actividades SIN PANTALLA para hacer con un hijo/a.
+  const intereses = input.interests.map((i) => labelOf(INTEREST_OPTIONS, i)).join(', ')
 
-Datos del niño/a:
+  return `
+Sos parte de Compinches, una app que le da a madres y padres ideas de juego SIN PANTALLA para compartir con su hijo/a. No sos maestro ni pediatra: sos el cómplice del adulto. No hablamos de hitos ni de rendimiento, hablamos del rato compartido.
+
+Situación de hoy:
 - Edad: ${input.ageMonths} meses
-- Etapa motriz: ${input.motor}
-- Intereses: ${input.interests.join(', ')}
-- Tiempo disponible: ${input.time} minutos
-- Lugar: ${input.place}
-- Estado de ánimo: ${input.state}
-- Materiales disponibles: ${input.materials}
-- Tipo de actividad buscada: ${input.type}
-- Objetivo: ${input.objective}
-- Quién participa: ${input.who}
-${input.notes ? `- Notas del padre/madre: ${input.notes}` : ''}
+- Cómo se mueve: ${labelOf(MOTOR_OPTIONS, input.motor)}
+- Qué le copa: ${intereses}
+- Tiempo disponible: ${labelOf(TIME_OPTIONS, input.time)}
+- Dónde están: ${labelOf(PLACE_OPTIONS, input.place)}
+- Energía: ${labelOf(STATE_OPTIONS, input.state)}
+- Materiales: ${labelOf(MATERIALS_OPTIONS, input.materials)}
+- Tipo de juego: ${labelOf(TYPE_OPTIONS, input.type)}
+- Objetivo: ${labelOf(OBJECTIVE_OPTIONS, input.objective)}
+- Quién participa: ${labelOf(WHO_OPTIONS, input.who)}
+${input.notes ? `- Notas del adulto (qué ya probaron o no enganchó): ${input.notes}` : ''}
 
 ${excludeTitles.length > 0 ? `Ya se sugirieron estas actividades, no las repitas ni sugieras variantes muy similares: ${excludeTitles.join(', ')}` : ''}
 
-Generá exactamente ${count} actividades, CLARAMENTE distintas entre sí (en material, dinámica y espacio requerido — evitá variaciones superficiales de la misma idea).
+Generá exactamente ${count} actividades, CLARAMENTE distintas entre sí (en material, dinámica y espacio requerido; evitá variaciones superficiales de la misma idea).
+
+Cómo escribir (obligatorio en todos los campos):
+- Le hablás al adulto, de vos, en español rioplatense ("Poné", "Sentate", "Dejá"). Nunca imites el habla de un chico.
+- Género neutro SIEMPRE para el hijo/a. Nunca uses él, ella, lo ni la para referirte al hijo/a (le sí se puede), ni adjetivos o participios con género que se refieran al hijo/a (apoyado/a, sentado/a, cansado/a, contento/a, "él mismo"). Tampoco "el bebé" ni "la nena". Reformulá con la acción sola, con verbos reflexivos o en plural inclusivo. Si hace falta nombrarle, usá "tu hijo/a".
+  - Mal: "Ayudá al bebé a pararse apoyado". Bien: "Ofrecé tu mano o el borde del sillón para que se pare".
+  - Mal: "Dejá que lo haga sonar él mismo". Bien: "Dejá que haga sonar el juguete".
+  - Mal: "Cansarla antes de dormir". Bien: "Bajar el ritmo antes de dormir".
+- Directo y práctico. Sin superlativos, sin signos de exclamación, sin emojis, sin tono de venta.
+- title: nombre corto y concreto, de 2 a 5 palabras, con mayúscula solo en la primera letra.
+- forWhat: una oración que diga para qué momento sirve.
+- materialsList: cosas concretas de la casa, una por ítem.
+- steps: entre 3 y 5 pasos. Cada uno arranca con un verbo en segunda persona (vos) o en plural inclusivo ("Marcá", "Empujen", "Busquen").
+- learns: una oración sobre qué fortalece, sin prometer resultados ni hablar de hitos del desarrollo.
 `.trim()
 }

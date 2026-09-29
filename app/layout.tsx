@@ -1,25 +1,26 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Baloo_2, Inter } from 'next/font/google'
+import { Bricolage_Grotesque, Nunito_Sans } from 'next/font/google'
 import './globals.css'
 
-const baloo = Baloo_2({
+const bricolage = Bricolage_Grotesque({
   subsets: ['latin'],
-  variable: '--font-baloo',
+  variable: '--font-bricolage',
   weight: ['700', '800'],
+  display: 'swap',
 })
 
-const inter = Inter({
+const nunito = Nunito_Sans({
   subsets: ['latin'],
-  variable: '--font-inter',
-  weight: ['400', '500'],
+  variable: '--font-nunito',
+  weight: ['400', '600', '700'],
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
   title: 'Compinches',
   description:
     'Ideas de juego sin pantalla para compartir con tu hijo/a, según su edad y el momento del día.',
-  generator: 'v0.app',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
@@ -33,7 +34,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  themeColor: '#FFE9D6',
+  themeColor: '#FBF6EC',
 }
 
 export default function RootLayout({
@@ -42,7 +43,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="es" className={`${baloo.variable} ${inter.variable} bg-background`}>
+    <html lang="es-AR" className={`${bricolage.variable} ${nunito.variable} bg-background`}>
       <body className="font-sans antialiased">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}

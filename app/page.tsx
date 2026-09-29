@@ -1,13 +1,15 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
+import { History } from 'lucide-react'
 import { PlayForm } from '@/components/recetario/play-form'
 import { Results } from '@/components/recetario/results'
 import { generateActivities } from '@/lib/recetario/generate'
 import type { Activity, PlayInput } from '@/lib/recetario/types'
 import { CafecitoButton } from '@/components/cafecito-button'
 import { AuthStatus } from '@/components/auth-status'
-import Link from 'next/link'
+import Logo from '@/components/Logo'
 import { supabase } from '@/lib/supabaseClient'
 
 export default function Page() {
@@ -70,33 +72,36 @@ export default function Page() {
   }
 
   return (
-    <main className="mx-auto min-h-screen w-full max-w-md bg-peach px-4 pb-10 lg:max-w-6xl lg:px-8">
-      <header className="flex flex-col items-center gap-2 pt-8 pb-6 text-center">
-        <h1 className="font-heading text-4xl font-extrabold tracking-tight text-balance">
-          <span className="text-primary">compinches</span><span className="text-accent">.</span>
+    <main className="mx-auto min-h-screen w-full max-w-[1100px] px-4 pb-10 md:px-8">
+      {/* Bienvenida: única pantalla con texto centrado */}
+      <header className="flex flex-col items-center gap-3 pt-8 pb-8 text-center">
+        <h1>
+          <Logo alto={36} />
         </h1>
-        <p className="text-pretty text-sm leading-relaxed text-muted-foreground">
+        <p className="cuerpo max-w-md text-pretty text-noche-suave">
           Tu compinche para inventar la tarde: ideas sin pantalla, hechas a tu manera.
         </p>
-        <div className="mt-2">
+        <div className="flex flex-col items-center gap-1">
           <AuthStatus />
-          <Link href="/historial" className="mt-1 block text-center text-xs text-terracota underline">
+          <Link
+            href="/historial"
+            className="etiqueta inline-flex min-h-11 items-center gap-1.5 text-noche underline underline-offset-4"
+          >
+            <History className="size-[18px]" strokeWidth={2} aria-hidden="true" />
             Ver mi historial
           </Link>
         </div>
       </header>
 
       {hasSearched ? (
-        <div className="lg:grid lg:grid-cols-[380px_1fr] lg:items-start lg:gap-8">
-          <div>
+        <div className="md:grid md:grid-cols-[300px_1fr] md:items-start md:gap-8">
+          <aside aria-label="Filtros">
             <PlayForm loading={loading} onGenerate={handleGenerate} />
-          </div>
+          </aside>
 
-          <div ref={resultsRef} className="scroll-mt-4 lg:sticky lg:top-8">
-            <div className="mt-8 lg:mt-0">
-              <h2 className="mb-4 font-heading text-2xl font-bold text-foreground">
-                3 ideas para hoy
-              </h2>
+          <div ref={resultsRef} className="scroll-mt-4">
+            <div className="mt-8 md:mt-0">
+              <h2 className="titulo-pantalla mb-4 text-noche">3 ideas para hoy</h2>
               <Results
                 loading={loading}
                 activities={activities}
