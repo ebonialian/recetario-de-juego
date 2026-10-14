@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import { History } from 'lucide-react'
+import { History, Lightbulb } from 'lucide-react'
 import { PlayForm } from '@/components/recetario/play-form'
 import { Results } from '@/components/recetario/results'
 import { generateActivities } from '@/lib/recetario/generate'
@@ -90,16 +90,27 @@ export default function Page() {
             <History className="size-[18px]" strokeWidth={2} aria-hidden="true" />
             Ver mi historial
           </Link>
+          <Link
+            href="/sugerir"
+            className="etiqueta inline-flex min-h-11 items-center gap-1.5 text-noche underline underline-offset-4"
+          >
+            <Lightbulb className="size-[18px]" strokeWidth={2} aria-hidden="true" />
+            Sumá una idea
+          </Link>
         </div>
       </header>
 
       {hasSearched ? (
-        <div className="md:grid md:grid-cols-[300px_1fr] md:items-start md:gap-8">
-          <aside aria-label="Filtros">
+        <div className="md:grid md:grid-cols-[320px_1fr] md:items-start md:gap-8">
+          {/* Barra de filtros: fija al costado, con scroll propio */}
+          <aside
+            aria-label="Filtros"
+            className="md:sticky md:top-6 md:max-h-[calc(100dvh-3rem)] md:overflow-y-auto md:overscroll-contain md:pr-2 [scrollbar-width:thin]"
+          >
             <PlayForm loading={loading} onGenerate={handleGenerate} />
           </aside>
 
-          <div ref={resultsRef} className="scroll-mt-4">
+          <div ref={resultsRef} className="scroll-mt-6">
             <div className="mt-8 md:mt-0">
               <h2 className="titulo-pantalla mb-4 text-noche">3 ideas para hoy</h2>
               <Results

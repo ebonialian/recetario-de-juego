@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { RefreshCw } from 'lucide-react'
 import type { Activity } from '@/lib/recetario/types'
 import { ActivityCard } from './activity-card'
@@ -43,6 +44,13 @@ export function Results({ loading, activities, onRegenerate }: ResultsProps) {
         <RefreshCw className="size-5" strokeWidth={2} aria-hidden="true" />
         Ver otras 3 ideas
       </button>
+
+      <p className="micro text-center text-noche-suave">
+        ¿Tenés un juego que funciona en casa?{' '}
+        <Link href="/sugerir" className="font-bold text-noche underline underline-offset-4">
+          Sumalo a Compinches
+        </Link>
+      </p>
     </section>
   )
 }

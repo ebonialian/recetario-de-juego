@@ -26,7 +26,7 @@ import type {
   TimeSlot,
   Who,
 } from '@/lib/recetario/types'
-import { AgeStepper } from './age-stepper'
+import { AgePicker } from './age-picker'
 import { Chip } from './chip'
 
 interface FieldProps {
@@ -98,8 +98,8 @@ export function PlayForm({ loading, onGenerate, variant = 'compact' }: PlayFormP
 
   return (
     <form onSubmit={handleSubmit} className={formLayout}>
-      <Field label="¿Qué edad tiene?" hint="Sumá o restá meses">
-        <AgeStepper months={ageMonths} onChange={setAgeMonths} />
+      <Field label="¿Qué edad tiene?" hint="Antes de los 2 años, elegí también los meses">
+        <AgePicker months={ageMonths} onChange={setAgeMonths} />
       </Field>
 
       <Field label="¿Cómo se mueve ahora?" hint="Elegí su etapa">

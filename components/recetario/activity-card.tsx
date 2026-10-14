@@ -15,6 +15,7 @@ import {
 import type { LucideIcon } from 'lucide-react'
 import type { Activity } from '@/lib/recetario/types'
 import { SkillTag } from './skill-tag'
+import { RatingDetail } from './rating-detail'
 import { supabase } from '@/lib/supabaseClient'
 import type { User } from '@supabase/supabase-js'
 
@@ -40,6 +41,7 @@ function SectionHeading({ icon: Icon, children }: { icon: LucideIcon; children: 
 export function ActivityCard({ activity, index }: { activity: Activity; index: number }) {
   const [user, setUser] = useState<User | null>(null)
   const [rating, setRating] = useState<'up' | 'down' | null>(null)
+  const [logId, setLogId] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState(false)
 
@@ -53,17 +55,23 @@ export function ActivityCard({ activity, index }: { activity: Activity; index: n
     if (!user || saving || rating) return
     setSaving(true)
     setError(false)
-    const { error } = await supabase.from('user_activity_log').insert({
-      user_id: user.id,
-      activity_title: activity.title,
-      rating: value,
-    })
+    const { data, error } = await supabase
+      .from('user_activity_log')
+      .insert({
+        user_id: user.id,
+        activity_title: activity.title,
+        activity_id: activity.id,
+        rating: value,
+      })
+      .select('id')
+      .single()
     setSaving(false)
     if (error) {
       console.error('Error guardando rating:', error)
       setError(true)
       return
     }
+    setLogId(String(data.id))
     setRating(value)
   }
 
@@ -133,10 +141,13 @@ export function ActivityCard({ activity, index }: { activity: Activity; index: n
       {user && (
         <div className="mt-6 border-t border-linea pt-4">
           {rating ? (
-            <div role="status" className="flex items-center gap-2 rounded-control bg-exito-tinte p-3">
-              <CircleCheck className="size-5 shrink-0 text-exito" strokeWidth={2} aria-hidden="true" />
-              <p className="cuerpo font-bold text-noche">Guardado en tu historial</p>
-            </div>
+            <>
+              <div role="status" className="flex items-center gap-2 rounded-control bg-exito-tinte p-3">
+                <CircleCheck className="size-5 shrink-0 text-exito" strokeWidth={2} aria-hidden="true" />
+                <p className="cuerpo font-bold text-noche">Guardado en tu historial</p>
+              </div>
+              {logId && <RatingDetail logId={logId} kind={rating} />}
+            </>
           ) : (
             <>
               {error && (

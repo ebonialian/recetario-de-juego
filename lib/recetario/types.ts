@@ -64,3 +64,21 @@ export interface PlayInput {
 }
 
 export const MOTOR_ORDER: MotorStage[] = ['sentada', 'gatea', 'apoyo', 'camina', 'corre']
+
+/** Lo que manda el formulario /sugerir. Mismos campos que Activity, sin id ni decoración. */
+export interface ActivitySuggestion {
+  title: string
+  forWhat: string
+  learns: string
+  duration: TimeSlot
+  materialsList: string[]
+  steps: string[]
+  skills: SkillKey[]
+  minMotor: number
+  interests: Interest[]
+  places: Place[]
+  type: ActType
+  states: ChildState[]
+  objectives: Objective[]
+  materialsLevel: Materials
+}
